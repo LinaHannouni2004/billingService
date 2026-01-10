@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Analytics</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/smoothie/1.34.0/smoothie.min.js"></script>
+</head>
+
+<body style="background: #000; margin: 0; padding: 0;">
+
+    <canvas id="chart" width="800" height="600" style="width: 100%; height: 100vh;"></canvas>
+
+    <script>
+        var index = -1;
+        var randomColor = function () {
+            ++index;
+            if (index >= colors.length) index = 0;
+            return colors[index];
+        }
+
+        // Tracking ORDER vs STOCK events (like P1 vs P2 in kafka-spring-stream)
+        var eventTypes = ["ORDER", "STOCK"];
+        var colors = [
+            { stroke: 'rgba(0, 255, 0, 1)', fill: 'rgba(0, 255, 0, 0.2)' },
+            { stroke: 'rgba(255, 0, 0, 1)', fill: 'rgba(255, 0, 0, 0.2)' }
+        ];
+
+        var courbe = [];
+
+        var smoothieChart = new SmoothieChart({
+            tooltip: true,
+            grid: {
+                strokeStyle: 'rgba(128, 128, 128, 0.5)',
+                fillStyle: '#000000',
+                lineWidth: 1,
+                millisPerLine: 1000,
+                verticalSections: 4
+            },
+            labels: { fillStyle: '#ffffff' }
+        });
+
+        smoothieChart.streamTo(document.getElementById("chart"), 500);
+
+        eventTypes.forEach(function (v) {
+            courbe[v] = new TimeSeries();
+            var col = randomColor();
+            smoothieChart.addTimeSeries(courbe[v], {
+                strokeStyle: col.stroke,
+                fillStyle: col.fill,
+                lineWidth: 2
+            });
+        });
+
+        // Connect to SSE stream (like /analytics in kafka-spring-stream)
+        var eventSource = new EventSource("/stream");
+        eventSource.addEventListener("message", function (event) {
+            var data = JSON.parse(event.data);
+            var now = new Date().getTime();
+
+            // Directly append window count (like kafka-spring-stream windowedBy)
+            eventTypes.forEach(function (v) {
+                var val = data[v] || 0;
+                courbe[v].append(now, val);
+            });
+        });
+    </script>
+</body>
+
+</html>
