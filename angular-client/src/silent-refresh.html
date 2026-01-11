@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Silent Refresh</title>
+</head>
+
+<body>
+    <script>
+        // This page is loaded in a hidden iframe to silently refresh the access token
+        parent.postMessage(location.hash || ('?' + location.search.slice(1)), location.origin);
+    </script>
+</body>
+
+</html>

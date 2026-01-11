@@ -7,7 +7,7 @@ Ce projet démontre une architecture complète de microservices utilisant **Spri
 ## 📸 Captures d'écran et Explications
 
 ### 1. Console H2 - Base de données Products (Inventory Service)
-![Console H2 Products](screenshots/Capture%20d'écran%202026-01-10%20222401.png)
+![Console H2 Products](screenshots/o4.png)
 
 Affiche la table `PRODUCT` dans la base de données H2 en mémoire (`jdbc:h2:mem:product-db`). On peut voir 3 produits initialisés :
 - **Computer** - 3200.00€, quantité: 11
@@ -17,14 +17,14 @@ Affiche la table `PRODUCT` dans la base de données H2 en mémoire (`jdbc:h2:mem
 ---
 
 ### 2. Console H2 - Base de données Bills (Billing Service)
-![Console H2 Bills](screenshots/Capture%20d'écran%202026-01-10%20222440.png)
+![Console H2 Bills](screenshots/o3.png)
 
 Affiche la table `BILL` dans la base de données du Billing Service (`jdbc:h2:mem:bills-db`). Montre 3 factures générées automatiquement au démarrage, associées aux clients 1, 2 et 3.
 
 ---
 
 ### 3. Console H2 - Base de données Customers (Customer Service)
-![Console H2 Customers](screenshots/Capture%20d'écran%202026-01-10%20222602.png)
+![Console H2 Customers](screenshots/o2.png)
 
 Affiche la table `CUSTOMER` avec 3 clients :
 - **David** - david@gmail.com
@@ -34,14 +34,14 @@ Affiche la table `CUSTOMER` avec 3 clients :
 ---
 
 ### 4. Spring Boot Actuator - Health Check
-![Actuator Health](screenshots/Capture%20d'écran%202026-01-10%20222803.png)
+![Actuator Health](screenshots/o1.png)
 
 Endpoint `/actuator/health` de l'Inventory Service montrant le statut **UP** - confirmant que le service fonctionne correctement.
 
 ---
 
 ### 5. Spring Boot Actuator - Beans
-![Actuator Beans](screenshots/Capture%20d'écran%202026-01-10%20222830.png)
+![Actuator Beans](screenshots/o.png)
 
 Endpoint `/actuator/beans` affichant tous les beans Spring enregistrés dans le contexte de l'application, incluant les configurations Eureka, LoadBalancer, et Discovery Client.
 
@@ -261,71 +261,20 @@ Endpoint de streaming `localhost:8085/api/stream/analytics` retournant les stati
 - lastUpdated, sequence number
 
 ---
+### 39. Security 
+![security](screenshots/z1.png)
+![security](screenshots/z2.png)
+![security](screenshots/z4.png)
+![security](screenshots/z5.png)
+![security](screenshots/z6.png)
+![security](screenshots/z7.png)
+![security](screenshots/z8.png)
+![security](screenshots/z9.png)
+![security](screenshots/z10.png)
+![security](screenshots/z11.png)
+![security](screenshots/z12.png)
 
-## 🚀 Comment Exécuter
 
-### 1. Démarrer l'infrastructure Kafka
-```bash
-cd d:\j2ee\Service-billing
-docker-compose up -d
-```
 
-### 2. Démarrer les services (dans l'ordre)
-```bash
-# 1. Discovery Service (Eureka)
-cd discovery-service && mvn spring-boot:run
 
-# 2. Config Service
-cd config-service && mvn spring-boot:run
-
-# 3. Gateway Service
-cd gateway-service && mvn spring-boot:run
-
-# 4. Customer Service
-cd customer-service && mvn spring-boot:run
-
-# 5. Inventory Service
-cd invetory-service && mvn spring-boot:run
-
-# 6. Billing Service
-cd billing-service && mvn spring-boot:run
-
-# 7. Supplier Service (optionnel)
-cd supplier-service && mvn spring-boot:run
-
-# 8. Data Analytics Service (optionnel)
-cd data-analytics-service && mvn spring-boot:run
-```
-
-### 3. Démarrer le client Angular
-```bash
-cd angular-client
-npm install
-ng serve
-```
-
-### 4. Accéder aux interfaces
-- **Eureka Dashboard**: http://localhost:8761
-- **Angular Client**: http://localhost:4200
-- **Gateway API**: http://localhost:8888
-- **Analytics Dashboard**: http://localhost:8085
-
----
-
-## 🔧 Technologies Utilisées
-
-| Catégorie | Technologies |
-|-----------|-------------|
-| **Backend** | Spring Boot 3.5.6, Spring Cloud 2025.0.0 |
-| **Discovery** | Netflix Eureka |
-| **Configuration** | Spring Cloud Config Server |
-| **Gateway** | Spring Cloud Gateway |
-| **Messaging** | Apache Kafka, Spring Cloud Stream |
-| **Database** | H2 (in-memory) |
-| **Frontend** | Angular 18, TypeScript |
-| **AI/Bot** | Spring AI, MCP Protocol, Telegram Bot API |
-| **Analytics** | SSE, Smoothie.js |
-| **Container** | Docker, Docker Compose |
-
----
 
