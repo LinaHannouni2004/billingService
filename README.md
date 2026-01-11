@@ -271,7 +271,6 @@ Endpoint de streaming `localhost:8085/api/stream/analytics` retournant les stati
 ![security](screenshots/z8.png)
 ![security](screenshots/z9.png)
 ![security](screenshots/z10.png)
-![security](screenshots/z11.png)
 ![security](screenshots/z12.png)
 
 
